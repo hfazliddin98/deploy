@@ -1,1 +1,1 @@
-# deploy
+# deploy uchun kerakli narsalar
