@@ -1,0 +1,42 @@
+# node-js ni o`rnatish
+
+sudo tar -xf node-v20.11.1.tar.gz
+sudo ./configure
+sudo make install
+sudo apt-get install gcc g++
+
+
+# nginx conf fayiliga
+
+sudo nano /etc/nginx/sites-enabled/proekt
+
+
+server {
+        server_name kengash.kspi.uz;
+
+        location / {
+            root /home/kengash/github/kengashfrond/build;
+            try_files $uri $uri/ /index.html;
+            index  index.html index.htm;
+        }
+
+    listen [::]:443 ssl ipv6only=on;                     
+    listen 443 ssl;                   
+    ssl_certificate /home/kengash/github/kspisertifikat/STAR.kspi.uz.crt;
+    ssl_certificate_key /home/kengash/github/kspisertifikat/STAR_kspi_uz.key;
+}
+server {
+    if ($host = www.kengash.kspi.uz) {
+        return 301 https://$host$request_uri;
+    }    
+
+    if ($host = kengash.kspi.uz) {
+        return 301 https://$host$request_uri;
+    }  
+
+        listen 80;
+        listen [::]:80;
+
+        server_name kengash.kspi.uz;
+    return 404;
+}
