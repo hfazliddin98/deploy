@@ -1,0 +1,21 @@
+server {
+    listen 80;
+    server_name kspiapi.kspi.uz;
+
+    listen 443 ssl;
+    server_name kspiapi.kspi.uz;  
+    ssl_certificate /home/kspi/github/kspisertifikat/STAR.kspi.uz.crt;  
+    ssl_certificate_key /home/kspi/github/kspisertifikat/STAR_kspi_uz.key;
+
+    client_max_body_size 100M;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /home/kspi/github/kspiapi;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    }
+}
